@@ -1,6 +1,10 @@
 import cv2
 import openai
 import os
+import re
+import requests
+import time
+from time import sleep
 import mediapipe as mp
 import random
 from flask import Flask, render_template, Response, send_from_directory, request
@@ -9,6 +13,7 @@ from keras.models import load_model
 import numpy as np
 import math
 
+openai.api_key = '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'
 
 
 class Card:
@@ -214,7 +219,6 @@ def download_frame():
         return "Failed to capture frame."
 
 
-openai.api_key = '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'
 
 @app.route('/campreview')
 def camp_review():
@@ -272,6 +276,66 @@ def process():
     calculate_interval(final_pred==question, 5, question)
     
     return render_template('process.html', predictedresult=final_pred, correctanswer= question) #pass in the predict result
+
+# def is_valid_input(input_text):
+#     # Remove any non-alphanumeric characters from the input
+#     cleaned_input = re.sub(r'\W+', '', input_text)
+
+#     # Check if the cleaned input is at least 5 characters long
+#     if len(cleaned_input) < 5:
+#         return False
+#     else:
+#         return True
+
+def is_valid_input(input_text):
+    # Remove any non-alphanumeric characters from the input
+    cleaned_input = re.sub(r'\W+', '', input_text)
+
+    # Check if the cleaned input is at least 5 characters long
+    if len(cleaned_input) < 5:
+        return False
+    else:
+        return True
+
+def bot(prompt,
+        engine='text-davinci-003',
+        temp=0.9,
+        top_p=1.0,
+        tokens=1000,
+        freq_pen=0.0,
+        pres_pen=0.5,
+        stop=['<<END>>']):
+  max_retry = 1
+  retry = 0
+  while True:
+    try:
+      response = openai.Completion.create(engine=engine,
+                                          prompt=prompt,
+                                          temperature=temp,
+                                          max_tokens=tokens,
+                                          top_p=top_p,
+                                          frequency_penalty=freq_pen,
+                                          presence_penalty=pres_pen,
+                                          stop=[" User:", " AI:"])
+      text = response['choices'][0]['text'].strip()
+      print(text)
+      return text
+    except Exception as oops:
+      retry += 1
+      if retry >= max_retry:
+        return "GPT3 error: %s" % oops
+      print('Error communicating with OpenAI:', oops)
+      sleep(1)
+
+
+@app.route("/get")
+def get_bot_response():
+    userText = request.args.get('msg')
+    botresponse = bot(prompt=userText)
+    return str(botresponse)
+
+
+
 
 
 if __name__ == '__main__':

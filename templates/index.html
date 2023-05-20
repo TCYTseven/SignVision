@@ -3,7 +3,97 @@
 <head>
     <link rel="stylesheet" type="text/css" href="static/style.css" />
     <title>SignVision</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 </head>
+<style>
+     .content {
+        position: fixed;
+        top: 0;
+        /*background: rgba(0, 0, 0, 0.5);*/
+        color: #f1f1f1;
+        width: 100%;
+        padding: 20px;
+      }
+
+
+      #chatbox {
+        margin-left: auto;
+        margin-right: auto;
+        width: 55%;
+        margin-top: 60px;
+      }
+      #userInput {
+        margin-left: auto;
+        margin-right: auto;
+        width: 40%;
+        margin-top: 60px;
+      }
+      #textInput {
+        width: 90%;
+        border: none;
+        border-bottom: 3px solid black;
+        font-family: monospace;
+        font-size: 17px;
+        margin-bottom: 10px;
+      }
+      .userText {
+        color: black;
+        font-family: monospace;
+        font-size: 17px;
+        text-align: right;
+        line-height: 30px;
+        border-radius: 5px;
+        margin-top: 25px;
+      }
+      .userText span {
+        background-color: #8cfff3;
+        padding: 10px;
+        border-radius: 7px;
+        box-shadow: 8px 7px 6px 5px #888888;
+      }
+      .botText {
+        color: black;
+        font-family: monospace;
+        font-size: 17px;
+        text-align: left;
+        line-height: 30px;
+        background-color: #ffffff ;
+        border-radius: 7px;
+        box-shadow: 8px 7px 6px 5px #888888;
+      }
+      .botText span {
+        padding: 10px;
+        border-radius: 2px;
+      }
+      #tidbit {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 300px;
+      }
+      .boxed {
+        margin-left: auto;
+        margin-right: auto;
+        width: 70%;
+        height:100px;
+        margin-top: 6px;
+        border: 0.0001px solid rgb(0, 0, 1);
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 1);
+        background-size: 50%;
+        border-radius: 8px;
+        height:400px;
+        backdrop-filter: blur(8px);
+        overflow-y: scroll !important;
+        
+      }
+
+
+      .box {
+        border: 0px solid black;
+      }
+
+</style>
 <body>
     <nav>
         <ul>
@@ -16,9 +106,64 @@
     
 <center>
     <h1 id="main"><u>Welcome to Sign Vision!</u></h1>
-    <h2 id="secondary">Lets Master ASL Together!</h2>
+    <!--<h2 id="secondary">Lets Master ASL Together!</h2>-->
+    <div class="box"></div>
     <img src="static/SignLanguage.gif" alt="ASL" width="30%" height="30%">
+
+<div class="boxed">
+  <div>
+    <div id="chatbox">
+      <span><img src = "static\svlogo.png" alt = "SignBot" width = "50"></span>
+      <span><p class="botText">
+        <span>Hey! Im SignBot, ask me anything! </span>
+      </p></span>
+    </div>
+    <div id="userInput">
+      <input id="textInput" type="text" name="msg" placeholder="Enter message here..." />
+    </div>
+  </div>
+</div>
+</div>
+<div style="height:50px"></div>
     <!-- Add your content here -->
+
 </center>
+
+<script>
+  function getBotResponse() {
+    
+    var image = '<img src = "static/signbot.png" alt = "SVbot" width = "25">';
+    var rawText = $("#textInput").val();
+    var userHtml = '<p class="userText"><span>' + rawText + "</span></p>";
+    $("#textInput").val("");
+    $("#chatbox").append(userHtml);
+    document
+      .getElementById("userInput")
+      .scrollIntoView({ block: "start", behavior: "smooth" });
+    $.get("/get", { msg: rawText }).done(function(data) {
+      var botHtml = image+'<p class="botText"><span>' + data + "</span></p>";
+      
+      $("#chatbox").append(botHtml);
+      document
+        .getElementById("userInput")
+        .scrollIntoView({ block: "start", behavior: "smooth" });
+    });
+  }
+  $("#textInput").keypress(function(e) {
+    if (e.which == 13) {
+      getBotResponse();
+    }
+  });
+
+  function showImage() {
+    document.getElementById("myImage").style.display = "block";
+  }
+
+  function hideImage() {
+    document.getElementById("myImage").style.display = "none";
+  }
+
+</script>
 </body>
+
 </html>
