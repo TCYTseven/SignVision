@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Prompt&display=swap');
+body {
+    font-family: 'Prompt', sans-serif;
+    color: #1f6b66;
+    background-color: #e0ffff;
+    height: 100vh;
+    margin:0;
+    padding: 0;
+    transition: background-color 0.3s;
+}
+/* Navbar styles */
+nav {
+    background-color: #333;
+    padding: 10px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center; /* Add this line */
+}
+
+li {
+    display: inline-block;
+    vertical-align: middle; /* Add this line */
+}
+
+li.logo {
+    float: left;
+    display: flex; /* Add this line */
+    align-items: center; /* Add this line */
+}
+
+li a {
+    display: block;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+li a:hover {
+    background-color: #111;
+}
+
+.logo img {
+    max-height: 40px;
+    width: auto;
+}
+
+
+
+/* Animation styles */
+@keyframes slideIn {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes fade {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+h1 {
+    animation: slideIn 1s ease-in-out;
+}
+
+#main {
+   font-size: 50px; 
+}
+
+
+/* Add this CSS code to your static/style.css file */
+
+#centeralign {
+    width: 600px;
+    margin: 0 auto;
+}
+
+#instructions {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    background-color: #f8f8f8;
+}
+
+#instructions h2 {
+    margin-top: 0;
+}
+
+#instructions ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+#instructions ul li:before {
+    content: "\2605"; /* Unicode for a star symbol */
+    margin-right: 10px;
+    color: #FFD700; /* Star color */
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    background-color: #4CAF50;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.button:hover {
+    background-color: #45a049;
+}
+
+#secondary {
+    padding-top: 0;
+    margin-top: 0;
+    font-size:29px;
+}
+
+li {
+    animation: fade 1s ease-in-out;
+    animation-delay: 0.2s;
+}
+
+li:nth-child(2) {
+    animation-delay: 0.4s;
+}
+
+li:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+#centeralign {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: 100vh; /* Optional: Set the height of the div to occupy the full viewport */
+  }
+  
+  .button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 4px;
+  }
+  
+  .button:hover {
+    background-color: #45a049;
+  }
+  

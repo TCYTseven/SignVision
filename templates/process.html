@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="static/style.css" />
+    <link rel="stylesheet" type="text/css" href="static/morestyles.css" />
+
+    <title>Flask Navbar Demo</title>
+</head>
+<script>
+  var loader = true; // Set the initial value of the loader variable
+        
+        function updateLoader() {
+            loader = false; // Set the new value for the loader variable
+            console.log(loader); // Print the updated value in the browser console
+            
+            // Send the 'loader' variable to Flask using AJAX
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/update_loader", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(JSON.stringify({ loader: loader }));
+        }
+</script>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/campreview">Cam Test</a></li>
+            <li><a href="/longtermlearn">Long Term Learning</a></li>
+
+
+        </ul>
+    </nav>
+    
+
+    <h1>The Correct Answer Was:</h1>
+    <div id="imgContainer">
+        <img src="static/correctAnswer/{{correctanswer}} in ASL.png" alt="{{correctanswer}} in ASL">
+
+    </div>
+    
+    <h3>Prediction: {{predictedresult}}</h3>
+
+<center>
+    <a href="#" class="button" id="next-button2" onclick="window.location.href='/learntest';">Next</a>
+</center>    
+    <!-- Add your content here -->
+</body>
+</html>

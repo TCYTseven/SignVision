@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="static/style.css" />
+    <title>Start Learning!</title>
+    <script>
+
+window.addEventListener('DOMContentLoaded', (event) => {
+    var timer = 5; // Timer duration in seconds
+    var snapshotCount = 1; // Counter for snapshots
+
+    // Function to update the timer display
+    function updateTimer() {
+        var timerDisplay = document.getElementById('timer');
+        timerDisplay.textContent = timer;
+        timer--;
+
+        if (timer < 0) {
+            window.location.href = "/process";
+            // // Hide the image, timer, and letter, and show the "Next" button
+            // document.getElementById('frame-image').style.display = 'none';
+            // document.getElementById('timer').style.display = 'none';
+            // document.getElementById('letter').style.display = 'none';
+            // document.getElementById('next-button').style.display = 'block';
+        } else {
+            // Capture snapshot
+            captureSnapshot(snapshotCount);
+            snapshotCount++;
+            setTimeout(updateTimer, 1000); // Update timer every second
+        }
+    }
+
+    // Function to capture snapshot
+    function captureSnapshot(count) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/capture?snapshot=' + count, true);
+        xhr.send();
+    }
+
+    // Function to restart the timer and show the camera
+    function restartTimer() {
+        timer = 5; // Reset the timer
+        snapshotCount = 1; // Reset the snapshot counter
+
+        // Show the image, timer, letter, and hide the "Next" button
+        document.getElementById('frame-image').style.display = 'block';
+        document.getElementById('timer').style.display = 'block';
+        document.getElementById('letter').style.display = 'block';
+        document.getElementById('next-button').style.display = 'none';
+
+        // Start the timer
+        updateTimer();
+
+    }
+
+    // Start the timer
+    updateTimer();
+
+    // Add click event listener to the "Next" button
+    document.getElementById('next-button').addEventListener('click', restartTimer);
+});
+
+    </script>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/campreview">Camera Test</a></li>
+            <li><a href="/longtermlearn">Long Term Learning</a></li>
+        </ul>
+    </nav>
+    <div id="centeralign">
+        <div style="height:50px"></div>
+        <div id="letter"><span style="font-size:40px">Enter The Letter: {{randomgenned}}</span></div>
+        <img id="frame-image" src="{{ url_for('video_feed') }}" width="640" height="480">
+        <div style="height:20px"></div>
+        <div style="font-size: 28px;" id="timer">10</div>
+        <h2>{{predict_results}}</h2>
+        <div style="height:20px"></div>
+        <a href="#" class="button" id="next-button" style="display: none;" onclick="restartTimer()">Next</a>
+    </div>
+</body>
+</html>
+

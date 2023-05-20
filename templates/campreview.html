@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Camera Review</title>
+    <link rel="stylesheet" type="text/css" href="static/camtest.css" />
+    <link rel="stylesheet" type="text/css" href="static/style.css" />
+
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/campreview">Camera Test</a></li>
+            <li><a href="/longtermlearn">Long Term Learning</a></li>
+
+        </ul>
+    </nav>
+    <h1>Camera Review</h1>
+    <div id="frame-container">
+        <img id="frame-image" src="{{ url_for('video_feed') }}" width="640" height="480">
+        <a id="download-button" href="{{ url_for('download_frame') }}" download>Download Frame</a>
+        <h4 style="font-size: 12px;">
+            *Note: By downloading the frame, you consent to us storing your image(s).
+        </h4>
+    </div>
+
+    <script type="text/javascript">
+        function showPopup() {
+            var popup = document.getElementById("popup-message");
+            popup.style.display = "block";
+            setTimeout(function() {
+            popup.style.display = "none";
+            }, 3000);
+        }
+
+        // Automatically reload the page every 10 seconds to keep the webcam feed updated
+        setInterval(function() {
+            location.reload();
+        }, 1000000);
+    </script>
+</body>
+</html>
