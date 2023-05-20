@@ -214,7 +214,7 @@ def download_frame():
         return "Failed to capture frame."
 
 
-openai.api_key = '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'
+openai.api_key = 'key........key
 
 @app.route('/campreview')
 def camp_review():
