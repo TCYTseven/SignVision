@@ -13,7 +13,7 @@ from keras.models import load_model
 import numpy as np
 import math
 
-openai.api_key = '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'
+openai.api_key = 'key'
 
 
 class Card:
