@@ -1,0 +1,1 @@
+Snapshots taken during the 5 second period during analyizng your hand go here to then be fed into the model - tejas.
